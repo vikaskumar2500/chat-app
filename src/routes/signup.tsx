@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const SignupSchema = z.object({
   name: z.string().min(1, "Name is required!"),
@@ -106,6 +107,7 @@ const Signup = () => {
             Submit
           </FormButton>
         </form>
+        <Link to="/login" className="text-blue-600 hover:underline">Already have an account?</Link>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid email address!" }),
@@ -84,6 +85,9 @@ const Login = () => {
             Submit
           </FormButton>
         </form>
+        <Link to="/signup" className="text-blue-600 hover:underline">
+          Create Your account
+        </Link>
       </div>
     </section>
   );
