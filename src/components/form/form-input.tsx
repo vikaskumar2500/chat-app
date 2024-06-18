@@ -11,6 +11,7 @@ interface FormInputProps extends InputProps {
   labelClassName?: string;
   errors?: FieldErrors;
   inputClassName?: string;
+  parentClassName?: string;
 }
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
@@ -21,6 +22,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       inputClassName,
       errors,
       labelClassName,
+      parentClassName,
       id,
       name,
       ...props
@@ -28,11 +30,20 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     ref
   ) => {
     return (
-      <div className={cn("flex flex-col gap-1 items-start w-full", className)}>
+      <div
+        className={cn(
+          "flex flex-col gap-1 items-start w-full",
+          parentClassName
+        )}
+      >
         <div
-          className={cn("flex flex-col gap-1 items-start w-full", className)}
+          className={cn("flex flex-col gap-1 justify-center w-full", className)}
         >
-          {label && <Label className={cn("", labelClassName)}>{label}</Label>}
+          {label && (
+            <Label className={cn("font-semibold", labelClassName)}>
+              {label}
+            </Label>
+          )}
           <Input
             ref={ref}
             id={id}
@@ -42,7 +53,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             {...props}
           />
         </div>
-        <FormError errors={errors} id={id!} />
+        {errors ? <FormError errors={errors} id={id!} /> : null}
       </div>
     );
   }
