@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useRef } from "react";
 
 const SignupSchema = z.object({
   name: z.string().min(1, "Name is required!"),
@@ -23,6 +24,7 @@ const SignupSchema = z.object({
 type FieldValues = z.infer<typeof SignupSchema>;
 
 const Signup = () => {
+  const form = useRef<HTMLFormElement>(null);
   const {
     register,
     formState: { errors },
@@ -47,6 +49,8 @@ const Signup = () => {
       if (res.status === 500) throw new Error(resData.message);
 
       console.log(res.data.body);
+      form.current?.reset();
+      alert("Successfuly signed up");
     } catch (e: any) {
       console.log(e.response?.data?.message);
     }
@@ -62,6 +66,7 @@ const Signup = () => {
           </span>
         </div>
         <form
+          ref={form}
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col items-center w-full justify-center gap-5 px-10"
         >
