@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid email address!" }),
@@ -21,6 +21,7 @@ const LoginSchema = z.object({
 type FieldValues = z.infer<typeof LoginSchema>;
 
 const Login = () => {
+  const navigate = useNavigate();
   const form = useRef<HTMLFormElement>(null);
   const {
     register,
@@ -39,12 +40,13 @@ const Login = () => {
         ...data,
       });
 
-      const user = res.data.body.user;
-      console.log(user);
-      form.current?.reset();
+      const token = res.data.token as string;
+      localStorage.setItem("auth_token", token);
       alert("Successfuly signed up");
+      navigate("/signup");
     } catch (e: any) {
       console.log(e.response?.data?.message);
+      alert(e.response?.data?.message);
     }
   };
 
@@ -84,10 +86,10 @@ const Login = () => {
           >
             Submit
           </FormButton>
+          <Link to="/signup" className="text-blue-600 hover:underline">
+            Create Your account
+          </Link>
         </form>
-        <Link to="/signup" className="text-blue-600 hover:underline">
-          Create Your account
-        </Link>
       </div>
     </section>
   );

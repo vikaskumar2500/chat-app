@@ -54,6 +54,7 @@ const Signup = () => {
       alert("Successfuly signed up");
     } catch (e: any) {
       console.log(e.response?.data?.message);
+      alert(e.response?.data?.message);
     }
   };
 
@@ -100,14 +101,16 @@ const Signup = () => {
             errors={errors}
           />
           <FormButton
-            // disabled={Object.keys(errors).length > 0 ? true : false}
+            disabled={Object.keys(errors).length > 0 ? true : false}
             type="submit"
             className="mt-3"
           >
             Submit
           </FormButton>
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Already have an account?
+          </Link>
         </form>
-        <Link to="/login" className="text-blue-600 hover:underline">Already have an account?</Link>
       </div>
     </section>
   );
